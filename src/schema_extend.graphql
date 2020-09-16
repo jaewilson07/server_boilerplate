@@ -1,0 +1,15 @@
+type Mutation {
+  CreateMovie(  _id: Long!
+    duration: Int!
+    id: Int!
+    poster_image: String!
+    rated: String!
+    summary: String!
+    tagline: String!
+    title: String! )
+}
+
+type Query {
+  GetAllMovies: [Movie]!
+  FindMovi(id: ID!): Movie!
+}

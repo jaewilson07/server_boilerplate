@@ -1,0 +1,64 @@
+type Keyword {
+  _id: Long!
+  id: Int!
+  name: String!
+  movies: [Movie] @relation(name: "HAS_KEYWORD", direction: IN)
+}
+
+type Movie {
+  _id: Long!
+  duration: Int!
+  id: Int!
+  poster_image: String!
+  rated: String!
+  summary: String!
+  tagline: String!
+  title: String!
+  has_genre: [Genre] @relation(name: "HAS_GENRE", direction: OUT)
+  has_keyword: [Keyword] @relation(name: "HAS_KEYWORD", direction: OUT)
+  persons_writer_of: [Person] @relation(name: "WRITER_OF", direction: IN)
+  persons_produced: [Person] @relation(name: "PRODUCED", direction: IN)
+  persons_directed: [Person] @relation(name: "DIRECTED", direction: IN)
+  persons_acted_in: [Person] @relation(name: "ACTED_IN", direction: IN)
+  users_rated: [User] @relation(name: "RATED", direction: IN)
+}
+
+type Person {
+  _id: Long!
+  born: Int!
+  id: Int!
+  name: String!
+  poster_image: String!
+  writer_of: [Movie] @relation(name: "WRITER_OF", direction: OUT)
+  produced: [Movie] @relation(name: "PRODUCED", direction: OUT)
+  directed: [Movie] @relation(name: "DIRECTED", direction: OUT)
+  acted_in: [Movie] @relation(name: "ACTED_IN", direction: OUT)
+  ACTED_IN_rel: [ACTED_IN]
+}
+
+type User {
+  _id: Long!
+  id: String!
+  username: String!
+  rated: [Movie] @relation(name: "RATED", direction: OUT)
+  RATED_rel: [RATED]
+}
+
+type Genre {
+  _id: Long!
+  id: Int!
+  name: String!
+  movies: [Movie] @relation(name: "HAS_GENRE", direction: IN)
+}
+
+type ACTED_IN @relation(name: "ACTED_IN") {
+  from: Person!
+  to: Movie!
+  role: [String]!
+}
+
+type RATED @relation(name: "RATED") {
+  from: User!
+  to: Movie!
+  rating: Int!
+}
